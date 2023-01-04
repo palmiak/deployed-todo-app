@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send(proceess.env.USERNAME)
+  res.send(process.env.USERNAME)
 })
 
 // get all todos
