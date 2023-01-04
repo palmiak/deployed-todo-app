@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send(process.env.USERNAME)
+  res.send('hello world')
 })
 
 // get all todos
@@ -67,15 +67,17 @@ app.delete('/todos/:id', async (req, res) => {
 // signup
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body
+
   try {
       const salt = bcrypt.genSaltSync(10)
       const hashedPassword = bcrypt.hashSync(password, salt)
-      
+
     const signUp = await pool.query(`INSERT INTO users (email, hashed_password) VALUES($1, $2)`,
       [email, hashedPassword])
-       
+  
+    
     const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' })
-        
+    
     res.json({ email, token })
     
   
